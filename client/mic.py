@@ -36,6 +36,7 @@ class Mic:
         self._audio = pyaudio.PyAudio()
         self._logger.info("Initialization of PyAudio completed.")
 
+
     def __del__(self):
         self._audio.terminate()
 
@@ -48,8 +49,8 @@ class Mic:
 
         # TODO: Consolidate variables from the next three functions
         THRESHOLD_MULTIPLIER = 1.8
-        RATE = 16000
-        CHUNK = 1024
+        RATE = 44100
+        CHUNK = 512
 
         # number of seconds to allow to establish threshold
         THRESHOLD_TIME = 1
@@ -93,8 +94,8 @@ class Mic:
         """
 
         THRESHOLD_MULTIPLIER = 1.8
-        RATE = 16000
-        CHUNK = 1024
+        RATE = 44100
+        CHUNK = 512
 
         # number of seconds to allow to establish threshold
         THRESHOLD_TIME = 1
@@ -202,8 +203,8 @@ class Mic:
             Returns a list of the matching options or None
         """
 
-        RATE = 16000
-        CHUNK = 1024
+        RATE = 44100
+        CHUNK = 512
         LISTEN_TIME = 12
 
         # check if no threshold provided
