@@ -547,13 +547,15 @@ class WitAiSTT(AbstractSTTEngine):
         stt_engine: witai
         witai-stt:
           access_token:    ERJKGE86SOMERANDOMTOKEN23471AB
+          api_version: 20150101
     """
 
     SLUG = "witai"
 
-    def __init__(self, access_token):
+    def __init__(self, access_token, api_version = '20150101'):
         self._logger = logging.getLogger(__name__)
         self.token = access_token
+        self.api_version = api_version
 
     @classmethod
     def get_config(cls):
@@ -568,6 +570,9 @@ class WitAiSTT(AbstractSTTEngine):
                     if 'access_token' in profile['witai-stt']:
                         config['access_token'] = \
                             profile['witai-stt']['access_token']
+                    if 'api_version' in profile['witai-stt']:
+                        config['api_version'] = profile['witai-stt']['api_version']
+            
         return config
 
     @property
@@ -587,7 +592,7 @@ class WitAiSTT(AbstractSTTEngine):
 
     def transcribe(self, fp):
         data = fp.read()
-        r = requests.post('https://api.wit.ai/speech?v=20150101',
+        r = requests.post('https://api.wit.ai/speech?v=%s' % self.api_version,
                           data=data,
                           headers=self.headers)
         try:
